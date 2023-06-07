@@ -1,0 +1,49 @@
+version: '3.0'
+services:
+  tree_ui:
+    #image: tugboatqa/php:7.4.2-apache
+    build: docker/.
+    container_name: tree_ui
+    volumes:
+      - "./:/var/www/html/"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - tree_db
+    ports:
+      - "81:80"
+    networks:
+      - tree_structure
+
+
+  tree_db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'tree_structure'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'tree'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'tree'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'tree'
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3307:3306'
+    expose:
+      # Opens port 3307 on the container
+      - '3307'
+      # Where our data will be persisted
+
+    container_name: tree_db
+    #    restart: always
+    networks:
+      - tree_structure
+
+networks:
+  tree_structure:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
