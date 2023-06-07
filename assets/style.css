@@ -1,0 +1,29 @@
+.main{
+    margin: auto;
+    padding: 30px 0px;
+}
+
+.example .tf-nc {
+    display: flex;
+    align-items: center;
+    gap: 5px
+}
+.tf-custom .tf-nc:before, .tf-custom .tf-nc:after {
+    /* css here */
+}
+.tf-custom li li:before {
+    /* css here */
+}
+
+.material-symbols-outlined {
+
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 200,
+            'GRAD' 0,
+            'opsz' 20
+}
+.material-symbols-outlined:hover{
+    cursor: pointer;
+}
+
