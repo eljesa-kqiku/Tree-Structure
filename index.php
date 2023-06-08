@@ -12,10 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 </head>
 <body>
-    <?php
-        require_once("./config/Database.php");
-        require_once("./config/GetNodes.php")
-    ?>
+
     <div class="main">
         <?php
             include './ui/NodesList.php';
