@@ -1,4 +1,4 @@
-<div >
+<div id="tree_container">
     <div class="tf-tree example" id="tree"></div>
 </div>
 <script src="ui/js/api_service.js"></script>
@@ -7,11 +7,13 @@
     refreshScreen()
 
     function refreshScreen(){
+        $.startLoader();
         getTreeData().then(res => {
             let treeData = res.data[0]
             let tree_html = printNode(treeData)
             tree_container.innerHTML = tree_html
         })
+        $.stopLoader();
     }
     function printNode(node) {
         let node_html = "<li><span class='tf-nc node-square' ";
