@@ -29,6 +29,6 @@
 
     function fetch_tree():String{
         $allTree = get_node(root_element()->id);
-        return json_encode($allTree);
+        return json_encode($allTree, JSON_PRETTY_PRINT);
     }
 

@@ -1,0 +1,29 @@
+<div >
+    <div class="tf-tree example" id="tree"></div>
+</div>
+
+<script src="ui/js/api_service.js"></script>
+<script>
+    const tree_container = document.getElementById("tree")
+    getTreeData().then(res => {
+        let treeData = res.data[0]
+        let tree_html = printNode(treeData)
+        tree_container.innerHTML = tree_html
+    })
+
+    function printNode(node) {
+        let node_html = "<li><span class='tf-nc node-square' ";
+        node_html += node.color_hex ? "style='background-color:#" + node.color_hex + "'" : '';
+        // node_html += "data-bs-toggle='tooltip' data-bs-placement='top' data-bs-custom-class='custom-tooltip' data-bs-title='$obj->description'";
+        node_html += ">" + node.name +  "</span>";
+        if (node.children_nodes?.length > 0) {
+            node_html += "<ul>";
+            node.children_nodes.forEach(ch => {
+                node_html += printNode(ch)
+            })
+            node_html += "</ul>";
+        }
+        node_html += "</li>"
+        return node_html
+    }
+</script>

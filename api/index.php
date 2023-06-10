@@ -29,4 +29,4 @@
 ////}
 ///
 include ("NodesAPI.php");
-echo fetch_tree();
+echo '{"data":[' . fetch_tree().']}';
