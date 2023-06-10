@@ -15,3 +15,10 @@ async function getTreeData(){
         console.log(e)
     }
 }
+
+async function editNode(payload){
+    // TODO: write edit node api call
+
+    console.log({payload})
+    refreshScreen()
+}

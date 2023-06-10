@@ -1,0 +1,65 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit node</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="clearInputs()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="d-flex flex-row mb-3">
+                    <div class="flex-fill">
+                        <label for="name" class="form-label">Node title</label>
+                        <input type="text" class="form-control" id="name" placeholder="Title">
+                    </div>
+                    <div class="align-self-end ms-2">
+                        <input type="color" class="form-control form-control-color" id="color" value="#563d7c" title="Choose your color">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="3"></textarea>
+                </div>
+
+                <div class="d-flex d-flex-row mb-3">
+                    <button type="button" class="btn btn-outline-primary flex-fill me-1">Add sibling</button>
+                    <button type="button" class="btn btn-outline-primary flex-fill">Add child</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clearInputs()">Close</button>
+                <button type="button" class="btn btn-primary" onclick="confirm()" data-bs-dismiss="modal">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const name_input = document.getElementById('name')
+    const color_input = document.getElementById('color')
+    const description_input = document.getElementById('description')
+    let current_id = null
+    function confirm(){
+        let payload = {
+            id: current_id,
+            name: name_input.value,
+            color_hex: color_input.value,
+            description: description_input.value
+        }
+
+        editNode(payload)
+        clearInputs()
+    }
+    function clearInputs(){
+        name_input.value = ''
+        color_input.value = '#563d7c'
+        description_input.value = ''
+    }
+    function initializeInputData(id, name, description, color){
+        current_id = id
+        name_input.value = name
+        color_input.value = color
+        description_input.value = description
+    }
+</script>
