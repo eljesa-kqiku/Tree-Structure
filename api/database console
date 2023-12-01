@@ -1,0 +1,66 @@
+use tree_structure;
+drop table if exists tree;
+create table tree(
+                     id int primary key not null auto_increment,
+                     name varchar(30) not null,
+                     description text,
+                     color_hex varchar(6),
+                     parent_id int,
+                     left_sibiling_id int,
+                     right_sibiling_id int,
+
+
+                     foreign key (parent_id) references tree(id),
+                     foreign key (left_sibiling_id) references tree(id),
+                     foreign key (right_sibiling_id) references tree(id)
+);
+
+insert into tree(name, description, parent_id, left_sibiling_id, right_sibiling_id) values
+                                                                                        (1, null, null, null, null),
+                                                                                        (2,null, 1, null, null),
+                                                                                        (3, null, 1, 2, null);
+update tree set right_sibiling_id=3 where id=2;
+
+
+# adds the FIRST child of a node
+delimiter //
+create procedure add_new_child_node(IN parent int, IN n varchar(30), IN descr text)
+begin
+    insert into tree(parent_id, name, description) values (parent, n, descr);
+end//
+delimiter ;
+
+# adds a sibiling to the left of leftmost child of the parent with id 'parent'
+delimiter //
+create procedure add_new_child_l(IN parent int, IN n varchar(30), IN right_s int, IN descr text)
+begin
+    insert into tree(parent_id, name, description, right_sibiling_id) values (parent, n, descr, right_s);
+    select id from tree where parent_id=parent AND name=n and description=descr and right_sibiling_id=right_s into @id;
+    update tree set left_sibiling_id=@id where id=right_s;
+end//
+delimiter ;
+
+# adds a sibiling to the right of rightmost child of the parent with id 'parent'
+delimiter //
+create procedure add_new_child_r(IN parent int, IN n varchar(30), IN left_s int, IN descr text)
+begin
+    insert into tree(parent_id, name, description, left_sibiling_id) values (parent, n, descr, left_s);
+    select id from tree where parent_id=parent AND name=n and description=descr and left_sibiling_id=left_s into @id;
+    update tree set right_sibiling_id=@id where id=left_s;
+end//
+delimiter ;
+
+
+delimiter //
+create procedure add_node_between(IN parent int, IN n varchar(30), IN descr text, IN left_s int, IN right_s int)
+begin
+    select parent;
+    insert into tree(parent_id, name, description, left_sibiling_id, right_sibiling_id) values (parent, n, descr, left_s, right_s);
+
+    select id from tree where parent_id=parent AND name=n and description=descr and left_sibiling_id=left_s and right_sibiling_id=right_s into @id;
+    update tree set right_sibiling_id = @id where id=left_s;
+    update tree set left_sibiling_id = @id where id=right_s;
+end //
+delimiter ;
+
+select * from tree;

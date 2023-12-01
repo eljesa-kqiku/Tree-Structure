@@ -28,5 +28,12 @@
 ////        break;
 ////}
 ///
+
 include ("NodesAPI.php");
-echo '{"data":[' . fetch_tree().']}';
+
+$requestMethod = $_SERVER['REQUEST_METHOD'];
+$params = $_SERVER['QUERY_STRING'];
+
+if($requestMethod === 'GET'){
+    echo '{"data":[' . fetch_tree().']}';
+}

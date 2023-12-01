@@ -1,10 +1,19 @@
 const api_root_url = 'http://localhost:81/api'
 
 async function getTreeData(){
-    let request = new Request(api_root_url);
+
+
+
+    const request = new Request(api_root_url, {
+        method: "POST",
+        body: JSON.stringify({
+            id: 0
+        })
+    });
 
     try{
-        let response = await fetch(request);
+        console.log({request})
+        let response = await fetch(request)
         if (response.status === 200) {
             response = response.json();
             return response

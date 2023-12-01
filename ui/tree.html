@@ -7,13 +7,13 @@
     refreshScreen()
 
     function refreshScreen(){
-        $.startLoader();
+        // $.startLoader();
         getTreeData().then(res => {
             let treeData = res.data[0]
             let tree_html = printNode(treeData)
             tree_container.innerHTML = tree_html
         })
-        $.stopLoader();
+        // $.stopLoader();
     }
     function printNode(node) {
         let node_html = "<li><span class='tf-nc node-square' ";

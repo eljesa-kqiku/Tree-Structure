@@ -31,4 +31,14 @@
         $allTree = get_node(root_element()->id);
         return json_encode($allTree, JSON_PRETTY_PRINT);
     }
+    function edit_node($payload):bool{
+        $obj = json_decode($payload, false);
+        $conn = Database::getInstance()->getConnection();
+        $stmt = $conn->prepare("UPDATE tree SET name=$obj->name, description=$obj->description, color_hex=$obj->color_hex WHERE id=$obj->id");
+        $stmt->execute();
+        return true;
+    }
+    function add_child_node(){
+
+    }
 
